@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-9 editor-container">
+      <div class="editor-limiter">
+        <div class="image-container" #bounder
+             [style.transform]="'scale(' + (zoom$ | async) + ') rotate(' + (rotate$ | async) + 'deg)'">
+          <img [src]="(selectedImage$ | async)?.src" alt="">
+          <!-- due to ngDraggable bug it works only if rotate angle equals to 0 -->
+          <input [ngDraggable]="(rotate$ | async) === 0" type="text"
+                 *ngFor="let text of (selectedImage$ | async)?.inputs"
+                 [bounds]="bounder" [inBounds]="false" [scale]="(zoom$ | async) || 1"
+                 [position]="text.position" (endOffset)="dragStopped($event, text)"
+                 (change)="updateContent($event, text)" [ngModel]="text.content"
+                 (edge)="edge($event)">
+        </div>
+      </div>
+      <div class="previews-container d-flex justify-content-center">
+        <div *ngFor="let image of images$ | async; index as i" class="preview-limiter">
+          <div class="preview-container" (click)="selectImage(i)" [style.transform]="getTransform(image)">
+            <img [src]="image.current.src" alt="">
+            <input *ngFor="let text of image.current.inputs" class="preview" [ngModel]="text.content" disabled
+                   [style.top]="getTop(text)" [style.left]='getLeft(text)'>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 d-flex flex-column align-items-center p-100">
+      <button class="btn-primary mb-3" id="new" (click)="addTextBlock()">NEW TEXT BLOCK</button>
+      <button class="btn-primary mb-3" id="zoom-in" (click)="zoomIn()">ZOOM IN</button>
+      <button class="btn-primary mb-3" id="zoom-out" (click)="zoomOut()">ZOOM OUT</button>
+      <button class="btn-primary mb-5" id="rotate" (click)="rotate()">ROTATE</button>
+      <button class="btn-primary mb-3" id="undo" (click)="undo()" [disabled]="disableUndo$ | async">UNDO</button>
+      <button class="btn-primary mb-3" id="redo" (click)="redo()" [disabled]="disableRedo$ | async">REDO</button>
+    </div>
+  </div>
+</div>

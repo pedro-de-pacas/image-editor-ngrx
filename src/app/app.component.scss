@@ -1,0 +1,102 @@
+$base-color: #63ABFF;
+
+.btn-primary {
+  width: 108px;
+  height: 30px;
+  border-radius: 2px;
+  font-weight: 400;
+  font-size: 10px;
+  background: $base-color;
+  border-width: 0;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    background: lightgrey;
+  }
+}
+
+.editor-container {
+
+  height: 100vh;
+
+  .editor-limiter {
+    overflow: auto;
+    text-align: center;
+    height: 90%;
+
+    .image-container {
+      display: inline-block;
+      height: 100%;
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .previews-container {
+    height: 10%;
+
+    .preview-limiter {
+      overflow: hidden;
+      margin: 0.5vh;
+      cursor: pointer;
+
+      .preview-container {
+        position: relative;
+        height: 100%;
+
+        img {
+          height: 9vh
+        }
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+    background: $base-color;
+    position: absolute;
+    bottom: 5%;
+    left: 100%;
+    height: 90%;
+    width: 2px;
+  }
+}
+
+.p-100 {
+  padding-top: 100px;
+}
+
+input {
+  &.preview {
+    font-size: 3px;
+  }
+
+  top: 0;
+  left: 0;
+  color: white;
+  position: absolute;
+  text-align: center;
+  background: transparent;
+  border: none;
+  font-size: 27px;
+
+  &:focus {
+    color: black;
+    background: white;
+  }
+}
+
+.ng-draggable {
+  cursor: grab;
+}
+
+.ng-dragging {
+  cursor: grabbing;
+}
